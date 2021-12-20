@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>MixZoomValue 多数值轴轴缩放</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+		var ROOT_PATH = 'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+
+        var option;
+
+        myChart.showLoading();
+		$.get(
+		  ROOT_PATH + '/data/asset/data/obama_budget_proposal_2012.list.json',
+		  function (obama_budget_2012) {
+			myChart.hideLoading();
+			option = {
+			  title: {
+				left: 'center',
+				top: 'bottom',
+				text: '多数值轴轴缩放'
+			  },
+			  tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+				  type: 'shadow',
+				  label: {
+					show: true
+				  }
+				}
+			  },
+			  toolbox: {
+				show: true,
+				feature: {
+				  mark: { show: true },
+				  dataView: { show: true, readOnly: false },
+				  magicType: { show: true, type: ['line', 'bar'] },
+				  restore: { show: true },
+				  saveAsImage: { show: true }
+				}
+			  },
+			  calculable: true,
+			  legend: {
+				data: ['Growth', 'Budget 2011', 'Budget 2012'],
+				itemGap: 5
+			  },
+			  grid: {
+				top: '12%',
+				left: '1%',
+				right: '10%',
+				bottom: '14%',
+				containLabel: true
+			  },
+			  xAxis: [
+				{
+				  type: 'category',
+				  data: obama_budget_2012.names
+				}
+			  ],
+			  yAxis: [
+				{
+				  type: 'value',
+				  name: 'Budget (million USD)',
+				  axisLabel: {
+					formatter: function (a) {
+					  a = +a;
+					  return isFinite(a) ? echarts.format.addCommas(+a / 1000) : '';
+					}
+				  }
+				}
+			  ],
+			  dataZoom: [
+				{
+				  show: true,
+				  start: 94,
+				  end: 100
+				},
+				{
+				  type: 'inside',
+				  start: 94,
+				  end: 100
+				},
+				{
+				  show: true,
+				  yAxisIndex: 0,
+				  filterMode: 'empty',
+				  width: 30,
+				  height: '80%',
+				  showDataShadow: false,
+				  left: '93%'
+				}
+			  ],
+			  series: [
+				{
+				  name: 'Budget 2011',
+				  type: 'bar',
+				  data: obama_budget_2012.budget2011List
+				},
+				{
+				  name: 'Budget 2012',
+				  type: 'bar',
+				  data: obama_budget_2012.budget2012List
+				}
+			  ]
+			};
+			myChart.setOption(option);
+		  }
+		);
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

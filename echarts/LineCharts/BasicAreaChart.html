@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>BasicAreaChart 基础面积图</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+
+        option = {
+		  title: {
+			text: '基础面积图',
+			top: 'bottom',
+			left: 'center'
+		  },
+		  xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+		  },
+		  yAxis: {
+			type: 'value'
+		  },
+		  series: [
+			{
+			  data: [820, 932, 901, 934, 1290, 1330, 1320],
+			  type: 'line',
+			  areaStyle: {}
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

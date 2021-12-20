@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>BasicCandlestick 基础K线图</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		option = {
+		  title: {
+			text: '基础K线图',
+			left: 'center',
+			top: 'bottom'
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  xAxis: {
+			data: ['2017-10-24', '2017-10-25', '2017-10-26', '2017-10-27']
+		  },
+		  yAxis: {},
+		  series: [
+			{
+			  type: 'candlestick',
+			  data: [
+				[20, 34, 10, 38],
+				[40, 35, 30, 50],
+				[31, 38, 33, 44],
+				[38, 15, 5, 42]
+			  ]
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

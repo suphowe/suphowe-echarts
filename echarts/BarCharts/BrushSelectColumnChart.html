@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>BrushSelectColumnChart 柱状图框选</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+
+        let xAxisData = [];
+		let data1 = [];
+		let data2 = [];
+		let data3 = [];
+		let data4 = [];
+		for (let i = 0; i < 10; i++) {
+		  xAxisData.push('Class' + i);
+		  data1.push(+(Math.random() * 2).toFixed(2));
+		  data2.push(+(Math.random() * 5).toFixed(2));
+		  data3.push(+(Math.random() + 0.3).toFixed(2));
+		  data4.push(+Math.random().toFixed(2));
+		}
+		var emphasisStyle = {
+		  itemStyle: {
+			shadowBlur: 10,
+			shadowColor: 'rgba(0,0,0,0.3)'
+		  }
+		};
+		option = {
+		  title: {
+			left: 'center',
+			top: 'bottom',
+			text: '柱状图框选'
+		  },
+		  legend: {
+			data: ['bar', 'bar2', 'bar3', 'bar4'],
+			left: '10%'
+		  },
+		  brush: {
+			toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
+			xAxisIndex: 0
+		  },
+		  toolbox: {
+			feature: {
+			  magicType: {
+				type: ['stack']
+			  },
+			  dataView: {}
+			}
+		  },
+		  tooltip: {},
+		  xAxis: {
+			data: xAxisData,
+			name: 'X Axis',
+			axisLine: { onZero: true },
+			splitLine: { show: false },
+			splitArea: { show: false }
+		  },
+		  yAxis: {},
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  series: [
+			{
+			  name: 'bar',
+			  type: 'bar',
+			  stack: 'one',
+			  emphasis: emphasisStyle,
+			  data: data1
+			},
+			{
+			  name: 'bar2',
+			  type: 'bar',
+			  stack: 'one',
+			  emphasis: emphasisStyle,
+			  data: data2
+			},
+			{
+			  name: 'bar3',
+			  type: 'bar',
+			  stack: 'two',
+			  emphasis: emphasisStyle,
+			  data: data3
+			},
+			{
+			  name: 'bar4',
+			  type: 'bar',
+			  stack: 'two',
+			  emphasis: emphasisStyle,
+			  data: data4
+			}
+		  ]
+		};
+		myChart.on('brushSelected', function (params) {
+		  var brushed = [];
+		  var brushComponent = params.batch[0];
+		  for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
+			var rawIndices = brushComponent.selected[sIdx].dataIndex;
+			brushed.push('[Series ' + sIdx + '] ' + rawIndices.join(', '));
+		  }
+		  myChart.setOption({
+			title: {
+			  backgroundColor: '#333',
+			  text: 'SELECTED DATA INDICES: \n' + brushed.join('\n'),
+			  bottom: 0,
+			  right: '10%',
+			  width: 100,
+			  textStyle: {
+				fontSize: 12,
+				color: '#fff'
+			  }
+			}
+		  });
+		});
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

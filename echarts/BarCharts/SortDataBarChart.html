@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>SortDataBarChart 柱状图排序</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		option = {
+		  title: {
+			text: '柱状图排序',
+			left: 'center',
+			top: 'bottom'
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  dataset: [
+			{
+			  dimensions: ['name', 'age', 'profession', 'score', 'date'],
+			  source: [
+				['Hannah Krause', 41, 'Engineer', 314, '2011-02-12'],
+				['Zhao Qian', 20, 'Teacher', 351, '2011-03-01'],
+				['Jasmin Krause ', 52, 'Musician', 287, '2011-02-14'],
+				['Li Lei', 37, 'Teacher', 219, '2011-02-18'],
+				['Karle Neumann', 25, 'Engineer', 253, '2011-04-02'],
+				['Adrian Groß', 19, 'Teacher', '-', '2011-01-16'],
+				['Mia Neumann', 71, 'Engineer', 165, '2011-03-19'],
+				['Böhm Fuchs', 36, 'Musician', 318, '2011-02-24'],
+				['Han Meimei', 67, 'Engineer', 366, '2011-03-12']
+			  ]
+			},
+			{
+			  transform: {
+				type: 'sort',
+				config: { dimension: 'score', order: 'desc' }
+			  }
+			}
+		  ],
+		  xAxis: {
+			type: 'category',
+			axisLabel: { interval: 0, rotate: 30 }
+		  },
+		  yAxis: {},
+		  series: {
+			type: 'bar',
+			encode: { x: 'name', y: 'score' },
+			datasetIndex: 1
+		  }
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

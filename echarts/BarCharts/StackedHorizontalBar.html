@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>StackedHorizontalBar 堆叠条形图</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+
+        option = {
+		  title: {
+			left: 'center',
+			text: '堆叠条形图',
+			top: 'bottom'
+		  },
+		  tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+			  // Use axis to trigger tooltip
+			  type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+			}
+		  },
+		  legend: {},
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  xAxis: {
+			type: 'value'
+		  },
+		  yAxis: {
+			type: 'category',
+			data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+		  },
+		  series: [
+			{
+			  name: 'Direct',
+			  type: 'bar',
+			  stack: 'total',
+			  label: {
+				show: true
+			  },
+			  emphasis: {
+				focus: 'series'
+			  },
+			  data: [320, 302, 301, 334, 390, 330, 320]
+			},
+			{
+			  name: 'Mail Ad',
+			  type: 'bar',
+			  stack: 'total',
+			  label: {
+				show: true
+			  },
+			  emphasis: {
+				focus: 'series'
+			  },
+			  data: [120, 132, 101, 134, 90, 230, 210]
+			},
+			{
+			  name: 'Affiliate Ad',
+			  type: 'bar',
+			  stack: 'total',
+			  label: {
+				show: true
+			  },
+			  emphasis: {
+				focus: 'series'
+			  },
+			  data: [220, 182, 191, 234, 290, 330, 310]
+			},
+			{
+			  name: 'Video Ad',
+			  type: 'bar',
+			  stack: 'total',
+			  label: {
+				show: true
+			  },
+			  emphasis: {
+				focus: 'series'
+			  },
+			  data: [150, 212, 201, 154, 190, 330, 410]
+			},
+			{
+			  name: 'Search Engine',
+			  type: 'bar',
+			  stack: 'total',
+			  label: {
+				show: true
+			  },
+			  emphasis: {
+				focus: 'series'
+			  },
+			  data: [820, 832, 901, 934, 1290, 1330, 1320]
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

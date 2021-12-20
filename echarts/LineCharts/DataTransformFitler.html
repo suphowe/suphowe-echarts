@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>DataTransformFitler 数据过滤</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+
+        var ROOT_PATH = 'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+
+		$.get(
+		  ROOT_PATH + '/data/asset/data/life-expectancy-table.json',
+		  function (_rawData) {
+			run(_rawData);
+		  }
+		);
+		function run(_rawData) {
+		  option = {
+			dataset: [
+			  {
+				id: 'dataset_raw',
+				source: _rawData
+			  },
+			  {
+				id: 'dataset_since_1950_of_germany',
+				fromDatasetId: 'dataset_raw',
+				transform: {
+				  type: 'filter',
+				  config: {
+					and: [
+					  { dimension: 'Year', gte: 1950 },
+					  { dimension: 'Country', '=': 'Germany' }
+					]
+				  }
+				}
+			  },
+			  {
+				id: 'dataset_since_1950_of_france',
+				fromDatasetId: 'dataset_raw',
+				transform: {
+				  type: 'filter',
+				  config: {
+					and: [
+					  { dimension: 'Year', gte: 1950 },
+					  { dimension: 'Country', '=': 'France' }
+					]
+				  }
+				}
+			  }
+			],
+			title: {
+			  top: 'bottom',
+			  left: 'center',
+			  text: '数据过滤'
+			},
+			tooltip: {
+			  trigger: 'axis'
+			},
+			grid: {
+				bottom: '14%',
+				containLabel: true
+			},
+			xAxis: {
+			  type: 'category',
+			  nameLocation: 'middle'
+			},
+			yAxis: {
+			  name: 'Income'
+			},
+			series: [
+			  {
+				type: 'line',
+				datasetId: 'dataset_since_1950_of_germany',
+				showSymbol: false,
+				encode: {
+				  x: 'Year',
+				  y: 'Income',
+				  itemName: 'Year',
+				  tooltip: ['Income']
+				}
+			  },
+			  {
+				type: 'line',
+				datasetId: 'dataset_since_1950_of_france',
+				showSymbol: false,
+				encode: {
+				  x: 'Year',
+				  y: 'Income',
+				  itemName: 'Year',
+				  tooltip: ['Income']
+				}
+			  }
+			]
+		  };
+		  myChart.setOption(option);
+		}
+
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

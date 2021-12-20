@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>AnimationDelay 柱状图动画延迟</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+
+        var xAxisData = [];
+		var data1 = [];
+		var data2 = [];
+		for (var i = 0; i < 100; i++) {
+		  xAxisData.push('A' + i);
+		  data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
+		  data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
+		}
+		option = {
+		  title: {
+			left: 'center',
+			top: 'bottom',
+			text: '柱状图动画延迟'
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  legend: {
+			data: ['bar', 'bar2']
+		  },
+		  toolbox: {
+			// y: 'bottom',
+			feature: {
+			  magicType: {
+				type: ['stack']
+			  },
+			  dataView: {},
+			  saveAsImage: {
+				pixelRatio: 2
+			  }
+			}
+		  },
+		  tooltip: {},
+		  xAxis: {
+			data: xAxisData,
+			splitLine: {
+			  show: false
+			}
+		  },
+		  yAxis: {},
+		  series: [
+			{
+			  name: 'bar',
+			  type: 'bar',
+			  data: data1,
+			  emphasis: {
+				focus: 'series'
+			  },
+			  animationDelay: function (idx) {
+				return idx * 10;
+			  }
+			},
+			{
+			  name: 'bar2',
+			  type: 'bar',
+			  data: data2,
+			  emphasis: {
+				focus: 'series'
+			  },
+			  animationDelay: function (idx) {
+				return idx * 10 + 100;
+			  }
+			}
+		  ],
+		  animationEasing: 'elasticOut',
+		  animationDelayUpdate: function (idx) {
+			return idx * 5;
+		  }
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

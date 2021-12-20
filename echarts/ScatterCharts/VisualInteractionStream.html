@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>VisualInteractionStream 流式渲染和视觉映射操作</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+		var ROOT_PATH = 'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+
+        var option;
+		
+		// Thanks to: 若怀冰
+		// http://gallery.echartsjs.com/explore.html?u=bd-16906679
+		// http://gallery.echartsjs.com/editor.html?c=xHJw-hVqjW
+		$.getJSON(
+		  ROOT_PATH + '/data/asset/data/house-price-area2.json',
+		  function (data) {
+			var option = {
+			  title: {
+				text: '流式渲染和视觉映射操作',
+				left: 'center',
+				top: 'bottom'
+			  },
+			  grid: {
+				left: '3%',
+				right: '14%',
+				bottom: '14%',
+				containLabel: true
+			  },
+			  visualMap: {
+				min: 15202,
+				max: 159980,
+				dimension: 1,
+				orient: 'vertical',
+				right: 10,
+				top: 'center',
+				text: ['HIGH', 'LOW'],
+				calculable: true,
+				inRange: {
+				  color: ['#f2c31a', '#24b7f2']
+				}
+			  },
+			  tooltip: {
+				trigger: 'item',
+				axisPointer: {
+				  type: 'cross'
+				}
+			  },
+			  xAxis: [
+				{
+				  type: 'value'
+				}
+			  ],
+			  yAxis: [
+				{
+				  type: 'value'
+				}
+			  ],
+			  series: [
+				{
+				  name: 'price-area',
+				  type: 'scatter',
+				  symbolSize: 5,
+				  data: data
+				}
+			  ]
+			};
+			myChart.setOption(option);
+		  }
+		);
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

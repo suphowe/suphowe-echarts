@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>LineInCartesianCoordinateSystem 双数值轴折线图</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+
+        option = {
+		  title: {
+			top: 'bottom',
+			text: '双数值轴折线图'
+		  },
+		  xAxis: {},
+		  yAxis: {},
+		  series: [
+			{
+			  data: [
+				[10, 40],
+				[50, 100],
+				[40, 20]
+			  ],
+			  type: 'line'
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

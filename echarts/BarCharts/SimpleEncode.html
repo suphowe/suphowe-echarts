@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>SimpleEncode 指定数据到坐标轴的映射</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		option = {
+		  title: {
+			text: '指定数据到坐标轴的映射',
+			left: 'center',
+			top: 'bottom'
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  dataset: {
+			source: [
+			  ['score', 'amount', 'product'],
+			  [89.3, 58212, 'Matcha Latte'],
+			  [57.1, 78254, 'Milk Tea'],
+			  [74.4, 41032, 'Cheese Cocoa'],
+			  [50.1, 12755, 'Cheese Brownie'],
+			  [89.7, 20145, 'Matcha Cocoa'],
+			  [68.1, 79146, 'Tea'],
+			  [19.6, 91852, 'Orange Juice'],
+			  [10.6, 101852, 'Lemon Juice'],
+			  [32.7, 20112, 'Walnut Brownie']
+			]
+		  },
+		  xAxis: { 
+			name: 'amount',
+			//坐标轴刻度标签的相关设置 ,45度倾斜显示
+			axisLabel : {
+                interval:0,
+                rotate:"45"
+            }
+		  },
+		  yAxis: { type: 'category' },
+		  visualMap: {
+			orient: 'horizontal',
+			left: 'center',
+			min: 10,
+			max: 100,
+			top: 'top',
+			text: ['High Score', 'Low Score'],
+			// Map the score column to color
+			dimension: 0,
+			inRange: {
+			  color: ['#65B581', '#FFCE34', '#FD665F']
+			}
+		  },
+		  series: [
+			{
+			  type: 'bar',
+			  encode: {
+				// Map the "amount" column to X axis.
+				x: 'amount',
+				// Map the "product" column to Y axis
+				y: 'product'
+			  }
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

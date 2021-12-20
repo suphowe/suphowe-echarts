@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PieLabelAlign 饼图标签对齐</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		const data = [
+		  {
+			name: 'Apples',
+			value: 70
+		  },
+		  {
+			name: 'Strawberries',
+			value: 68
+		  },
+		  {
+			name: 'Bananas',
+			value: 48
+		  },
+		  {
+			name: 'Oranges',
+			value: 40
+		  },
+		  {
+			name: 'Pears',
+			value: 32
+		  },
+		  {
+			name: 'Pineapples',
+			value: 27
+		  },
+		  {
+			name: 'Grapes',
+			value: 18
+		  }
+		];
+		option = {
+		  title: [
+			{
+			  text: '饼图标签对齐',
+			  top: 'bottom',
+			  left: 'center'
+			},
+			{
+			  subtext: 'alignTo: "none" (default)',
+			  left: '16.67%',
+			  top: '75%',
+			  textAlign: 'center'
+			},
+			{
+			  subtext: 'alignTo: "labelLine"',
+			  left: '50%',
+			  top: '75%',
+			  textAlign: 'center'
+			},
+			{
+			  subtext: 'alignTo: "edge"',
+			  left: '83.33%',
+			  top: '75%',
+			  textAlign: 'center'
+			}
+		  ],
+		  series: [
+			{
+			  type: 'pie',
+			  radius: '25%',
+			  center: ['50%', '50%'],
+			  data: data,
+			  label: {
+				position: 'outer',
+				alignTo: 'none',
+				bleedMargin: 5
+			  },
+			  left: 0,
+			  right: '66.6667%',
+			  top: 0,
+			  bottom: 0
+			},
+			{
+			  type: 'pie',
+			  radius: '25%',
+			  center: ['50%', '50%'],
+			  data: data,
+			  label: {
+				position: 'outer',
+				alignTo: 'labelLine',
+				bleedMargin: 5
+			  },
+			  left: '33.3333%',
+			  right: '33.3333%',
+			  top: 0,
+			  bottom: 0
+			},
+			{
+			  type: 'pie',
+			  radius: '25%',
+			  center: ['50%', '50%'],
+			  data: data,
+			  label: {
+				position: 'outer',
+				alignTo: 'edge',
+				margin: 20
+			  },
+			  left: '66.6667%',
+			  right: 0,
+			  top: 0,
+			  bottom: 0
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

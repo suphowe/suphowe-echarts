@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>TwoValueAxesPolar2 极坐标双数值轴</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		const data = [];
+		for (let i = 0; i <= 360; i++) {
+		  let t = (i / 180) * Math.PI;
+		  let r = Math.sin(2 * t) * Math.cos(2 * t);
+		  data.push([r, i]);
+		}
+		option = {
+		  title: {
+			top: 'bottom',
+			text: '极坐标双数值轴'
+		  },
+		  legend: {
+			data: ['line']
+		  },
+		  polar: {
+			center: ['50%', '54%']
+		  },
+		  tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+			  type: 'cross'
+			}
+		  },
+		  angleAxis: {
+			type: 'value',
+			startAngle: 0
+		  },
+		  radiusAxis: {
+			min: 0
+		  },
+		  series: [
+			{
+			  coordinateSystem: 'polar',
+			  name: 'line',
+			  type: 'line',
+			  showSymbol: false,
+			  data: data
+			}
+		  ],
+		  animationDuration: 2000
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

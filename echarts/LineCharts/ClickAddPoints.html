@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>ClickAddPoints 点击添加折线图拐点</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		const symbolSize = 20;
+		const data = [
+		  [15, 0],
+		  [-50, 10],
+		  [-56.5, 20],
+		  [-46.5, 30],
+		  [-22.1, 40]
+		];
+		option = {
+		  title: {
+			top: 'bottom',
+			text: '点击添加折线图拐点'
+		  },
+		  tooltip: {
+			formatter: function (params) {
+			  var data = params.data || [0, 0];
+			  return data[0].toFixed(2) + ', ' + data[1].toFixed(2);
+			}
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '3%',
+			containLabel: true
+		  },
+		  xAxis: {
+			min: -60,
+			max: 20,
+			type: 'value',
+			axisLine: { onZero: false }
+		  },
+		  yAxis: {
+			min: 0,
+			max: 40,
+			type: 'value',
+			axisLine: { onZero: false }
+		  },
+		  series: [
+			{
+			  id: 'a',
+			  type: 'line',
+			  smooth: true,
+			  symbolSize: symbolSize,
+			  data: data
+			}
+		  ]
+		};
+		var zr = myChart.getZr();
+		zr.on('click', function (params) {
+		  var pointInPixel = [params.offsetX, params.offsetY];
+		  var pointInGrid = myChart.convertFromPixel('grid', pointInPixel);
+		  if (myChart.containPixel('grid', pointInPixel)) {
+			data.push(pointInGrid);
+			myChart.setOption({
+			  series: [
+				{
+				  id: 'a',
+				  data: data
+				}
+			  ]
+			});
+		  }
+		});
+		zr.on('mousemove', function (params) {
+		  var pointInPixel = [params.offsetX, params.offsetY];
+		  zr.setCursorStyle(
+			myChart.containPixel('grid', pointInPixel) ? 'copy' : 'default'
+		  );
+		});
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

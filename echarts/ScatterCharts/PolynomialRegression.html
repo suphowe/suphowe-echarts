@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PolynomialRegression 多项式回归(使用统计插件)</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="../js/ecStat.min.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		// See https://github.com/ecomfe/echarts-stat
+		echarts.registerTransform(ecStat.transform.regression);
+		const data = [
+		  [96.24, 11.35],
+		  [33.09, 85.11],
+		  [57.6, 36.61],
+		  [36.77, 27.26],
+		  [20.1, 6.72],
+		  [45.53, 36.37],
+		  [110.07, 80.13],
+		  [72.05, 20.88],
+		  [39.82, 37.15],
+		  [48.05, 70.5],
+		  [0.85, 2.57],
+		  [51.66, 63.7],
+		  [61.07, 127.13],
+		  [64.54, 33.59],
+		  [35.5, 25.01],
+		  [226.55, 664.02],
+		  [188.6, 175.31],
+		  [81.31, 108.68]
+		];
+		option = {
+		  dataset: [
+			{
+			  source: data
+			},
+			{
+			  transform: {
+				type: 'ecStat:regression',
+				config: { method: 'polynomial', order: 3 }
+			  }
+			}
+		  ],
+		  title: {
+			text: '18家公司净利润及主营业务收入(万元)',
+			left: 'center',
+			top: 'bottom'
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+			  type: 'cross'
+			}
+		  },
+		  xAxis: {
+			splitLine: {
+			  lineStyle: {
+				type: 'dashed'
+			  }
+			},
+			splitNumber: 20
+		  },
+		  yAxis: {
+			min: -40,
+			splitLine: {
+			  lineStyle: {
+				type: 'dashed'
+			  }
+			}
+		  },
+		  series: [
+			{
+			  name: 'scatter',
+			  type: 'scatter'
+			},
+			{
+			  name: 'line',
+			  type: 'line',
+			  smooth: true,
+			  datasetIndex: 1,
+			  symbolSize: 0.1,
+			  symbol: 'circle',
+			  label: { show: true, fontSize: 16 },
+			  labelLayout: { dx: -20 },
+			  encode: { label: 2, tooltip: 1 }
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

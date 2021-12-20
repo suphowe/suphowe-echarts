@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>BarChartDrilldownAnimation 柱状图下钻动画</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+
+        option = {
+		  title: {
+			left: 'center',
+			top: 'bottom',
+			text: '柱状图下钻动画'
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  xAxis: {
+			data: ['Animals', 'Fruits', 'Cars']
+		  },
+		  yAxis: {},
+		  dataGroupId: '',
+		  animationDurationUpdate: 500,
+		  series: {
+			type: 'bar',
+			id: 'sales',
+			data: [
+			  {
+				value: 5,
+				groupId: 'animals'
+			  },
+			  {
+				value: 2,
+				groupId: 'fruits'
+			  },
+			  {
+				value: 4,
+				groupId: 'cars'
+			  }
+			],
+			universalTransition: {
+			  enabled: true,
+			  divideShape: 'clone'
+			}
+		  }
+		};
+		const drilldownData = [
+		  {
+			dataGroupId: 'animals',
+			data: [
+			  ['Cats', 4],
+			  ['Dogs', 2],
+			  ['Cows', 1],
+			  ['Sheep', 2],
+			  ['Pigs', 1]
+			]
+		  },
+		  {
+			dataGroupId: 'fruits',
+			data: [
+			  ['Apples', 4],
+			  ['Oranges', 2]
+			]
+		  },
+		  {
+			dataGroupId: 'cars',
+			data: [
+			  ['Toyota', 4],
+			  ['Opel', 2],
+			  ['Volkswagen', 2]
+			]
+		  }
+		];
+		myChart.on('click', function (event) {
+		  if (event.data) {
+			var subData = drilldownData.find(function (data) {
+			  return data.dataGroupId === event.data.groupId;
+			});
+			if (!subData) {
+			  return;
+			}
+			myChart.setOption({
+			  xAxis: {
+				data: subData.data.map(function (item) {
+				  return item[0];
+				})
+			  },
+			  series: {
+				type: 'bar',
+				id: 'sales',
+				dataGroupId: subData.dataGroupId,
+				data: subData.data.map(function (item) {
+				  return item[1];
+				}),
+				universalTransition: {
+				  enabled: true,
+				  divideShape: 'clone'
+				}
+			  },
+			  graphic: [
+				{
+				  type: 'text',
+				  left: 50,
+				  top: 20,
+				  style: {
+					text: 'Back',
+					fontSize: 18
+				  },
+				  onclick: function () {
+					myChart.setOption(option);
+				  }
+				}
+			  ]
+			});
+		  }
+		});
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

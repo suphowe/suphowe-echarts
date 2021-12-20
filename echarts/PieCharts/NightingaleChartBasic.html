@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>NightingaleChartBasic 基础南丁格尔玫瑰图</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		option = {
+		  title: {
+			text: '基础南丁格尔玫瑰图',
+			subtext: 'Fake Data',
+			left: 'center',
+			top: 'bottom'
+		  },
+		  grid: {
+			bottom: '14%',
+			containLabel: true
+		  },
+		  legend: {
+			top: 'top'
+		  },
+		  toolbox: {
+			show: true,
+			feature: {
+			  mark: { show: true },
+			  dataView: { show: true, readOnly: false },
+			  restore: { show: true },
+			  saveAsImage: { show: true }
+			}
+		  },
+		  series: [
+			{
+			  name: 'Nightingale Chart',
+			  type: 'pie',
+			  radius: [50, 150],
+			  center: ['50%', '50%'],
+			  roseType: 'area',
+			  itemStyle: {
+				borderRadius: 8
+			  },
+			  data: [
+				{ value: 40, name: 'rose 1' },
+				{ value: 38, name: 'rose 2' },
+				{ value: 32, name: 'rose 3' },
+				{ value: 30, name: 'rose 4' },
+				{ value: 28, name: 'rose 5' },
+				{ value: 26, name: 'rose 6' },
+				{ value: 22, name: 'rose 7' },
+				{ value: 18, name: 'rose 8' }
+			  ]
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

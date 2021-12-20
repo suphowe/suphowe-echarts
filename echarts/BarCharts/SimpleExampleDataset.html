@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>SimpleExampleDataset 最简单的数据集</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		option = {
+		  title: {
+			text: '最简单的数据集',
+			left: 'center',
+			top: 'bottom'
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  legend: {},
+		  tooltip: {},
+		  dataset: {
+			source: [
+			  ['product', '2015', '2016', '2017'],
+			  ['Matcha Latte', 43.3, 85.8, 93.7],
+			  ['Milk Tea', 83.1, 73.4, 55.1],
+			  ['Cheese Cocoa', 86.4, 65.2, 82.5],
+			  ['Walnut Brownie', 72.4, 53.9, 39.1]
+			]
+		  },
+		  xAxis: { type: 'category' },
+		  yAxis: {},
+		  // Declare several bar series, each will be mapped
+		  // to a column of dataset.source by default.
+		  series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>MasterPainterColorChoicesThroughoutHistory MasterPainterColorChoicesThroughoutHistory</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom);
+        var app = {};
+
+        var option;
+		
+		var ROOT_PATH = 'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+		myChart.showLoading();
+		$.get(
+		  ROOT_PATH + '/data/asset/data/masterPainterColorChoice.json',
+		  function (json) {
+			myChart.hideLoading();
+			var data = json[0].x.map(function (x, idx) {
+			  return [+x, +json[0].y[idx]];
+			});
+			myChart.setOption(
+			  (option = {
+				title: {
+				  text: 'MasterPainterColorChoicesThroughoutHistory',
+				  subtext: 'Data From Plot.ly',
+				  left: 'center',
+				  top: 'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '14%',
+					containLabel: true
+				},
+				xAxis: {
+				  type: 'value',
+				  splitLine: {
+					show: false
+				  },
+				  scale: true,
+				  splitNumber: 5,
+				  max: 'dataMax',
+				  axisLabel: {
+					formatter: function (val) {
+					  return val + 's';
+					}
+				  }
+				},
+				yAxis: {
+				  type: 'value',
+				  min: 0,
+				  max: 360,
+				  interval: 60,
+				  name: 'Hue',
+				  splitLine: {
+					show: false
+				  }
+				},
+				series: [
+				  {
+					name: 'scatter',
+					type: 'scatter',
+					symbolSize: function (val, param) {
+					  return (
+						json[0].marker.size[param.dataIndex] / json[0].marker.sizeref
+					  );
+					},
+					itemStyle: {
+					  color: function (param) {
+						return json[0].marker.color[param.dataIndex];
+					  }
+					},
+					data: data
+				  }
+				]
+			  })
+			);
+		  }
+		);
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>FlightSeatmapSVG 航班选座(SVG)</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		var ROOT_PATH = 'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+		$.get(ROOT_PATH + '/data/asset/geo/flight-seats.svg', function (svg) {
+		  echarts.registerMap('flight-seats', { svg: svg });
+		  const takenSeatNames = ['26E', '26D', '26C', '25D', '23C', '21A', '20F'];
+		  option = {
+			title: {
+				text: '航班选座(SVG)',
+				left: 'center',
+				top: 'bottom'
+			},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '14%',
+				containLabel: true
+			},
+			tooltip: {},
+			geo: {
+			  map: 'flight-seats',
+			  roam: true,
+			  selectedMode: 'multiple',
+			  layoutCenter: ['50%', '50%'],
+			  layoutSize: '95%',
+			  tooltip: {
+				show: true
+			  },
+			  itemStyle: {
+				color: '#fff'
+			  },
+			  emphasis: {
+				itemStyle: {
+				  color: undefined,
+				  borderColor: 'green',
+				  borderWidth: 2
+				},
+				label: {
+				  show: false
+				}
+			  },
+			  select: {
+				itemStyle: {
+				  color: 'green'
+				},
+				label: {
+				  show: false,
+				  textBorderColor: '#fff',
+				  textBorderWidth: 2
+				}
+			  },
+			  regions: makeTakenRegions(takenSeatNames)
+			}
+		  };
+		  function makeTakenRegions(takenSeatNames) {
+			var regions = [];
+			for (var i = 0; i < takenSeatNames.length; i++) {
+			  regions.push({
+				name: takenSeatNames[i],
+				silent: true,
+				itemStyle: {
+				  color: '#bf0e08'
+				},
+				emphasis: {
+				  itemStyle: {
+					borderColor: '#aaa',
+					borderWidth: 1
+				  }
+				},
+				select: {
+				  itemStyle: {
+					color: '#bf0e08'
+				  }
+				}
+			  });
+			}
+			return regions;
+		  }
+		  myChart.setOption(option);
+		  // Get selected seats.
+		  myChart.on('geoselectchanged', function (params) {
+			const selectedNames = params.allSelected[0].name.slice();
+			// Remove taken seats.
+			for (var i = selectedNames.length - 1; i >= 0; i--) {
+			  if (takenSeatNames.indexOf(selectedNames[i]) >= 0) {
+				selectedNames.splice(i, 1);
+			  }
+			}
+			console.log('selected', selectedNames);
+		  });
+		});
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

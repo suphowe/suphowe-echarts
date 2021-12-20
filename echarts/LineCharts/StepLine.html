@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>StepLine 阶梯折线图</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+		
+		option = {
+		  title: {
+			top: 'bottom',
+			text: '阶梯折线图'
+		  },
+		  tooltip: {
+			trigger: 'axis'
+		  },
+		  legend: {
+			data: ['Step Start', 'Step Middle', 'Step End']
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '3%',
+			containLabel: true
+		  },
+		  toolbox: {
+			feature: {
+			  saveAsImage: {}
+			}
+		  },
+		  xAxis: {
+			type: 'category',
+			data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+		  },
+		  yAxis: {
+			type: 'value'
+		  },
+		  series: [
+			{
+			  name: 'Step Start',
+			  type: 'line',
+			  step: 'start',
+			  data: [120, 132, 101, 134, 90, 230, 210]
+			},
+			{
+			  name: 'Step Middle',
+			  type: 'line',
+			  step: 'middle',
+			  data: [220, 282, 201, 234, 290, 430, 410]
+			},
+			{
+			  name: 'Step End',
+			  type: 'line',
+			  step: 'end',
+			  data: [450, 432, 401, 454, 590, 530, 510]
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>

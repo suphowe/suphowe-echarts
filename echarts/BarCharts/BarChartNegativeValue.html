@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>BarChartNegativeValue 龙卷风图</title>
+        <script type="text/javascript" src="../js/echarts.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+    </head>
+    <body style="height: 100%; margin: 0;overflow:-Scroll;overflow-x:hidden;overflow-y:hidden;">
+        <div id="container" style="height: 100%"></div>
+    </body>
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        // var myChart = echarts.init(dom);
+		// 深色
+        var myChart = echarts.init(dom, 'dark');
+        var app = {};
+
+        var option;
+
+        const labelRight = {
+		  position: 'right'
+		};
+		option = {
+		  title: {
+			left: 'center',
+			top: 'bottom',
+			text: '龙卷风图'
+		  },
+		  tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+			  type: 'shadow'
+			}
+		  },
+		  grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		  },
+		  xAxis: {
+			type: 'value',
+			position: 'top',
+			splitLine: {
+			  lineStyle: {
+				type: 'dashed'
+			  }
+			}
+		  },
+		  yAxis: {
+			type: 'category',
+			axisLine: { show: false },
+			axisLabel: { show: false },
+			axisTick: { show: false },
+			splitLine: { show: false },
+			data: [
+			  'ten',
+			  'nine',
+			  'eight',
+			  'seven',
+			  'six',
+			  'five',
+			  'four',
+			  'three',
+			  'two',
+			  'one'
+			]
+		  },
+		  series: [
+			{
+			  name: 'Cost',
+			  type: 'bar',
+			  stack: 'Total',
+			  label: {
+				show: true,
+				formatter: '{b}'
+			  },
+			  data: [
+				{ value: -0.07, label: labelRight },
+				{ value: -0.09, label: labelRight },
+				0.2,
+				0.44,
+				{ value: -0.23, label: labelRight },
+				0.08,
+				{ value: -0.17, label: labelRight },
+				0.47,
+				{ value: -0.36, label: labelRight },
+				0.18
+			  ]
+			}
+		  ]
+		};
+
+        if (option && typeof option === 'object') {
+            myChart.setOption(option);
+        }
+    </script>
+</html>
